@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if app.user %}
+        <p>Filtrer par :</p>
+        {% for langage in langages %}
+            <a href="{{path("main_filtre",{langage : langage.nom})}}">{{langage.nom}}</a>
+        {% endfor %}
+        <ul>
+        {% for user in users %}
+            <li>
+                <p>{{user.name}}</p>
+                    {% for l in user.langage %}
+                        <img src="{{ asset('image/' ~ l.nom ~'.png')}}" style="height: 50px; width: 50px">
+                    {% endfor %}
+                {% if app.user.ami|length > 0 %}
+                    {% for a in app.user.ami %}
+                        {%if(a.id != user.id)%}
+                            <a href="{{ path("main_addFriend", {UserIdToAdd : user.id}) }}">Ajouter en amis</a>
+                        {% else %}
+                            <a href="{{ path("main_removeFriend", {UserIdToRemove : user.id}) }}">Supprimer l'amis</a>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <a href="{{ path("main_addFriend", {UserIdToAdd : user.id}) }}">Ajouter en amis</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h3>Veuillez vous connecter à un compte pour voir la liste</h3>
+    {% endif %}
+<h3>Nombres de dev en BDD : {{ users | length  }}</h3>
+
+{% endblock %}

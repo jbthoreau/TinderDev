@@ -1,0 +1,15 @@
+<nav>
+    <ul>
+        <li><a href="{{ path('main_home') }}" title="Home">Accueil</a></li>
+        {% if app.user %}
+            <li><a href="{{ path('app_logout') }}" title="LogOff">Se Déconnecter</a></li>
+        {% else %}
+            <li><a href="{{ path('app_register') }}" title="registration">S'enregistrer</a></li>
+            <li><a href="{{ path('app_login') }}" title="LogIn">Se connecter</a></li>
+        {% endif %}
+
+
+
+
+    </ul>
+</nav>
